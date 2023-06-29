@@ -8,21 +8,26 @@ const Tabs = (topics) => {
   for (let i of topics){
     const element = document.createElement("div")
     element.className = "tab"
-    element.textContent = i
+    element.textContent = String(i)
     topic.appendChild(element)
 
 
   }
-  // topics.forEach(item => {
-  //   const element = document.createElement("div")
-  //   element.className = "tab"
-  //   element.textContent = item
-  //   topic.appendChild(element)
-
-  // });
   return topic
+}
+const tabsAppender = (selector) => {
+  axios.get(`http://localhost:5001/api/topics`)
+    .then(res => {
+      
+      const keys = res.data.topics
+     
+      document.querySelector(selector).appendChild(Tabs(keys))
 
-
+    })
+    .catch(err => {
+      console.error(err)
+    })
+} 
   
 
 
@@ -43,9 +48,9 @@ const Tabs = (topics) => {
   //   <div class="tab">technology</div>
   // </div>
   //
-}
 
-const tabsAppender = (selector) => {
+
+//const tabsAppender = (selector) => {
   // TASK 4
   // ---------------------
   // Implement this function which takes a css selector as its only argument.
@@ -53,18 +58,30 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
 
+ //Unable to find an element with the text: node.js. This could be because the text is broken up by multiple elements. 
+ //In this case, you can provide a function for your text matcher to make your matcher more flexible.
 
+  // axios.get(`http://localhost:5001/api/articles`)
+  //   .then(res => {
+  //     const re = res.data.articles
+  //     const keys = Object.keys(re)
+  //     document.querySelector(selector).appendChild(Tabs(keys))
 
-  axios.get(`http://localhost:5001/api/articles`)
-    .then(res => {
-      const keys = Object.keys(res.data.articles)
+  //   })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+
+  // axios.get(`http://localhost:5001/api/articles`)
+  //   .then(res => {
+  //     const keys = Object.keys(res.data.articles)
      
-      document.querySelector(selector).appendChild(Tabs(keys))
+  //     document.querySelector(selector).appendChild(Tabs(keys))
 
-    })
-    .catch(err => {
-      console.error(err)
-    })
-} 
+  //   })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+//} 
   
 export { Tabs, tabsAppender }
